@@ -1,0 +1,1369 @@
+{
+    "success": true,
+    "errors": [],
+    "widgets": [
+        {
+            "id": "dfcd3214-608c-4ecc-911d-4a0d451901c4",
+            "name": "Lo más vendido en Tv",
+            "type": "carousel",
+            "data": [
+                {
+                    "id": "123154966",
+                    "productId": "123154965",
+                    "displayName": "Smart TV Led 43 Google TV Full HD Bluetooth MGG43FFK",
+                    "brand": "MASTER G",
+                    "offeringId": "123154966",
+                    "rating": 4.6,
+                    "totalReviews": 132,
+                    "prices": [
+                        {
+                            "label": "",
+                            "originalPrice": "164.990",
+                            "symbol": "$ ",
+                            "type": 1,
+                            "isLoyalty": false,
+                            "opportunidadUnica": true,
+                            "crossed": false
+                        },
+                        {
+                            "label": "",
+                            "originalPrice": "169.990",
+                            "symbol": "$ ",
+                            "type": 3,
+                            "isLoyalty": false,
+                            "opportunidadUnica": false,
+                            "crossed": false
+                        },
+                        {
+                            "label": "",
+                            "originalPrice": "299.990",
+                            "symbol": "$ ",
+                            "type": 2,
+                            "isLoyalty": false,
+                            "opportunidadUnica": false,
+                            "crossed": true
+                        }
+                    ],
+                    "badges": [
+                        {
+                            "position": 2,
+                            "label": "-45%",
+                            "styles": {
+                                "backgroundColor": "#EB0029",
+                                "textColor": "#ffffff"
+                            }
+                        }
+                    ],
+                    "discountBadge": {
+                        "label": "-45%",
+                        "styles": {
+                            "backgroundColor": "#EB0029",
+                            "textColor": "#ffffff"
+                        }
+                    },
+                    "meatStickers": [
+                        {
+                            "label": "BLACK OUT",
+                            "type": "event",
+                            "styles": {
+                                "backgroundColor": "#333333",
+                                "textColor": "#ffffff"
+                            }
+                        }
+                    ],
+                    "url": "https://www.falabella.com/falabella-cl/product/123154965/Smart-TV-Led-43-Google-TV-Full-HD-Bluetooth-MGG43FFK/123154966",
+                    "categoryPaths": [],
+                    "sellerName": "Gasei",
+                    "mediaUrls": [
+                        "https://media.falabella.com/falabellaCL/123154966_01/public",
+                        "https://media.falabella.com/falabellaCL/123154966_02/public",
+                        "https://media.falabella.com/falabellaCL/123154966_03/public",
+                        "https://media.falabella.com/falabellaCL/123154966_04/public",
+                        "https://media.falabella.com/falabellaCL/123154966_05/public",
+                        "https://media.falabella.com/falabellaCL/123154966_06/public",
+                        "https://media.falabella.com/falabellaCL/123154966_07/public",
+                        "https://media.falabella.com/falabellaCL/123154966_08/public"
+                    ],
+                    "recommendedUnits": "",
+                    "backendCategoryId": "G19080602"
+                },
+                {
+                    "id": "129701349",
+                    "productId": "129701348",
+                    "displayName": "Smart TV Caixun LED 32 HD Google TV C32V1HG",
+                    "brand": "CAIXUN",
+                    "offeringId": "129701349",
+                    "rating": 4.7,
+                    "totalReviews": 270,
+                    "prices": [
+                        {
+                            "label": "",
+                            "originalPrice": "99.990",
+                            "symbol": "$ ",
+                            "type": 1,
+                            "isLoyalty": false,
+                            "opportunidadUnica": true,
+                            "crossed": false
+                        },
+                        {
+                            "label": "",
+                            "originalPrice": "109.990",
+                            "symbol": "$ ",
+                            "type": 3,
+                            "isLoyalty": false,
+                            "opportunidadUnica": false,
+                            "crossed": false
+                        },
+                        {
+                            "label": "",
+                            "originalPrice": "189.990",
+                            "symbol": "$ ",
+                            "type": 2,
+                            "isLoyalty": false,
+                            "opportunidadUnica": false,
+                            "crossed": true
+                        }
+                    ],
+                    "badges": [
+                        {
+                            "position": 2,
+                            "label": "-47%",
+                            "styles": {
+                                "backgroundColor": "#EB0029",
+                                "textColor": "#ffffff"
+                            }
+                        }
+                    ],
+                    "discountBadge": {
+                        "label": "-47%",
+                        "styles": {
+                            "backgroundColor": "#EB0029",
+                            "textColor": "#ffffff"
+                        }
+                    },
+                    "meatStickers": [
+                        {
+                            "label": "BLACK OUT",
+                            "type": "event",
+                            "styles": {
+                                "backgroundColor": "#333333",
+                                "textColor": "#ffffff"
+                            }
+                        }
+                    ],
+                    "url": "https://www.falabella.com/falabella-cl/product/129701348/Smart-TV-Caixun-LED-32-HD-Google-TV-C32V1HG/129701349",
+                    "categoryPaths": [],
+                    "sellerName": "CAIXUN",
+                    "mediaUrls": [
+                        "https://media.falabella.com/falabellaCL/129701349_01/public",
+                        "https://media.falabella.com/falabellaCL/129701349_02/public",
+                        "https://media.falabella.com/falabellaCL/129701349_03/public",
+                        "https://media.falabella.com/falabellaCL/129701349_04/public",
+                        "https://media.falabella.com/falabellaCL/129701349_05/public",
+                        "https://media.falabella.com/falabellaCL/129701349_06/public",
+                        "https://media.falabella.com/falabellaCL/129701349_07/public",
+                        "https://media.falabella.com/falabellaCL/129701349_08/public"
+                    ],
+                    "recommendedUnits": "",
+                    "backendCategoryId": "G19080602"
+                },
+                {
+                    "id": "123153200",
+                    "productId": "123153199",
+                    "displayName": "Smart TV LED 32\" Google TV HD Bluetooth MGG32HFK",
+                    "brand": "MASTER G",
+                    "offeringId": "123153200",
+                    "rating": 4.7,
+                    "totalReviews": 165,
+                    "prices": [
+                        {
+                            "label": "",
+                            "originalPrice": "109.990",
+                            "symbol": "$ ",
+                            "type": 1,
+                            "isLoyalty": false,
+                            "opportunidadUnica": true,
+                            "crossed": false
+                        },
+                        {
+                            "label": "",
+                            "originalPrice": "114.990",
+                            "symbol": "$ ",
+                            "type": 3,
+                            "isLoyalty": false,
+                            "opportunidadUnica": false,
+                            "crossed": false
+                        },
+                        {
+                            "label": "",
+                            "originalPrice": "219.990",
+                            "symbol": "$ ",
+                            "type": 2,
+                            "isLoyalty": false,
+                            "opportunidadUnica": false,
+                            "crossed": true
+                        }
+                    ],
+                    "badges": [
+                        {
+                            "position": 2,
+                            "label": "-50%",
+                            "styles": {
+                                "backgroundColor": "#EB0029",
+                                "textColor": "#ffffff"
+                            }
+                        }
+                    ],
+                    "discountBadge": {
+                        "label": "-50%",
+                        "styles": {
+                            "backgroundColor": "#EB0029",
+                            "textColor": "#ffffff"
+                        }
+                    },
+                    "meatStickers": [
+                        {
+                            "label": "BLACK OUT",
+                            "type": "event",
+                            "styles": {
+                                "backgroundColor": "#333333",
+                                "textColor": "#ffffff"
+                            }
+                        }
+                    ],
+                    "url": "https://www.falabella.com/falabella-cl/product/123153199/Smart-TV-LED-32-Google-TV-HD-Bluetooth-MGG32HFK/123153200",
+                    "categoryPaths": [],
+                    "sellerName": "Gasei",
+                    "mediaUrls": [
+                        "https://media.falabella.com/falabellaCL/123153200_01/public",
+                        "https://media.falabella.com/falabellaCL/123153200_02/public",
+                        "https://media.falabella.com/falabellaCL/123153200_03/public",
+                        "https://media.falabella.com/falabellaCL/123153200_04/public",
+                        "https://media.falabella.com/falabellaCL/123153200_05/public",
+                        "https://media.falabella.com/falabellaCL/123153200_06/public",
+                        "https://media.falabella.com/falabellaCL/123153200_07/public",
+                        "https://media.falabella.com/falabellaCL/123153200_08/public"
+                    ],
+                    "recommendedUnits": "",
+                    "backendCategoryId": "G19080602"
+                },
+                {
+                    "id": "129738569",
+                    "productId": "129738568",
+                    "displayName": "Smart TV Caixun LED 43 FHD Google TV C43V1FG",
+                    "brand": "CAIXUN",
+                    "offeringId": "129738569",
+                    "rating": 4.7,
+                    "totalReviews": 401,
+                    "prices": [
+                        {
+                            "label": "",
+                            "originalPrice": "154.990",
+                            "symbol": "$ ",
+                            "type": 1,
+                            "isLoyalty": false,
+                            "opportunidadUnica": true,
+                            "crossed": false
+                        },
+                        {
+                            "label": "",
+                            "originalPrice": "159.990",
+                            "symbol": "$ ",
+                            "type": 3,
+                            "isLoyalty": false,
+                            "opportunidadUnica": false,
+                            "crossed": false
+                        },
+                        {
+                            "label": "",
+                            "originalPrice": "289.990",
+                            "symbol": "$ ",
+                            "type": 2,
+                            "isLoyalty": false,
+                            "opportunidadUnica": false,
+                            "crossed": true
+                        }
+                    ],
+                    "badges": [
+                        {
+                            "position": 2,
+                            "label": "-47%",
+                            "styles": {
+                                "backgroundColor": "#EB0029",
+                                "textColor": "#ffffff"
+                            }
+                        }
+                    ],
+                    "discountBadge": {
+                        "label": "-47%",
+                        "styles": {
+                            "backgroundColor": "#EB0029",
+                            "textColor": "#ffffff"
+                        }
+                    },
+                    "meatStickers": [
+                        {
+                            "label": "BLACK OUT",
+                            "type": "event",
+                            "styles": {
+                                "backgroundColor": "#333333",
+                                "textColor": "#ffffff"
+                            }
+                        }
+                    ],
+                    "url": "https://www.falabella.com/falabella-cl/product/129738568/Smart-TV-Caixun-LED-43-FHD-Google-TV-C43V1FG/129738569",
+                    "categoryPaths": [],
+                    "sellerName": "CAIXUN",
+                    "mediaUrls": [
+                        "https://media.falabella.com/falabellaCL/129738569_01/public",
+                        "https://media.falabella.com/falabellaCL/129738569_02/public",
+                        "https://media.falabella.com/falabellaCL/129738569_03/public",
+                        "https://media.falabella.com/falabellaCL/129738569_04/public",
+                        "https://media.falabella.com/falabellaCL/129738569_05/public",
+                        "https://media.falabella.com/falabellaCL/129738569_06/public",
+                        "https://media.falabella.com/falabellaCL/129738569_07/public",
+                        "https://media.falabella.com/falabellaCL/129738569_08/public"
+                    ],
+                    "recommendedUnits": "",
+                    "backendCategoryId": "G19080602"
+                },
+                {
+                    "id": "124121840",
+                    "productId": "124121839",
+                    "displayName": "Smart TV Led 50\" Google TV 4K UHD Bluetooth MGG50UFKG",
+                    "brand": "MASTER G",
+                    "offeringId": "124121840",
+                    "rating": 4.4,
+                    "totalReviews": 30,
+                    "prices": [
+                        {
+                            "label": "",
+                            "originalPrice": "229.990",
+                            "symbol": "$ ",
+                            "type": 1,
+                            "isLoyalty": false,
+                            "opportunidadUnica": true,
+                            "crossed": false
+                        },
+                        {
+                            "label": "",
+                            "originalPrice": "239.990",
+                            "symbol": "$ ",
+                            "type": 3,
+                            "isLoyalty": false,
+                            "opportunidadUnica": false,
+                            "crossed": false
+                        },
+                        {
+                            "label": "",
+                            "originalPrice": "399.990",
+                            "symbol": "$ ",
+                            "type": 2,
+                            "isLoyalty": false,
+                            "opportunidadUnica": false,
+                            "crossed": true
+                        }
+                    ],
+                    "badges": [
+                        {
+                            "position": 2,
+                            "label": "-43%",
+                            "styles": {
+                                "backgroundColor": "#EB0029",
+                                "textColor": "#ffffff"
+                            }
+                        }
+                    ],
+                    "discountBadge": {
+                        "label": "-43%",
+                        "styles": {
+                            "backgroundColor": "#EB0029",
+                            "textColor": "#ffffff"
+                        }
+                    },
+                    "meatStickers": [
+                        {
+                            "label": "BLACK OUT",
+                            "type": "event",
+                            "styles": {
+                                "backgroundColor": "#333333",
+                                "textColor": "#ffffff"
+                            }
+                        }
+                    ],
+                    "url": "https://www.falabella.com/falabella-cl/product/124121839/Smart-TV-Led-50-Google-TV-4K-UHD-Bluetooth-MGG50UFKG/124121840",
+                    "categoryPaths": [],
+                    "sellerName": "Gasei",
+                    "mediaUrls": [
+                        "https://media.falabella.com/falabellaCL/124121840_01/public",
+                        "https://media.falabella.com/falabellaCL/124121840_02/public",
+                        "https://media.falabella.com/falabellaCL/124121840_03/public",
+                        "https://media.falabella.com/falabellaCL/124121840_04/public",
+                        "https://media.falabella.com/falabellaCL/124121840_05/public",
+                        "https://media.falabella.com/falabellaCL/124121840_06/public"
+                    ],
+                    "recommendedUnits": "",
+                    "backendCategoryId": "G19080602"
+                },
+                {
+                    "id": "80150574",
+                    "productId": "80150574",
+                    "displayName": "Smart TV QLED 43\" Q7FA 4K Vision AI (2025) Samsung",
+                    "brand": "SAMSUNG",
+                    "offeringId": "80150574",
+                    "rating": 5,
+                    "totalReviews": 1,
+                    "prices": [
+                        {
+                            "label": "",
+                            "originalPrice": "269.990",
+                            "symbol": "$ ",
+                            "type": 1,
+                            "isLoyalty": false,
+                            "opportunidadUnica": true,
+                            "crossed": false
+                        },
+                        {
+                            "label": "",
+                            "originalPrice": "279.990",
+                            "symbol": "$ ",
+                            "type": 3,
+                            "isLoyalty": false,
+                            "opportunidadUnica": false,
+                            "crossed": false
+                        },
+                        {
+                            "label": "",
+                            "originalPrice": "429.990",
+                            "symbol": "$ ",
+                            "type": 2,
+                            "isLoyalty": false,
+                            "opportunidadUnica": false,
+                            "crossed": true
+                        }
+                    ],
+                    "badges": [
+                        {
+                            "position": 2,
+                            "label": "-37%",
+                            "styles": {
+                                "backgroundColor": "#EB0029",
+                                "textColor": "#ffffff"
+                            }
+                        }
+                    ],
+                    "discountBadge": {
+                        "label": "-37%",
+                        "styles": {
+                            "backgroundColor": "#EB0029",
+                            "textColor": "#ffffff"
+                        }
+                    },
+                    "meatStickers": [
+                        {
+                            "label": "BLACK OUT",
+                            "type": "event",
+                            "styles": {
+                                "backgroundColor": "#333333",
+                                "textColor": "#ffffff"
+                            }
+                        }
+                    ],
+                    "url": "https://www.falabella.com/falabella-cl/product/80150574/Smart-TV-QLED-43%22-Q7FA-4K-Vision-AI-(2025)-Samsung/80150574",
+                    "categoryPaths": [],
+                    "sellerName": "FALABELLA",
+                    "mediaUrls": [
+                        "https://media.falabella.com/falabellaCL/80150574_1/public",
+                        "https://media.falabella.com/falabellaCL/80150574_2/public",
+                        "https://media.falabella.com/falabellaCL/80150574_3/public",
+                        "https://media.falabella.com/falabellaCL/80150574_4/public",
+                        "https://media.falabella.com/falabellaCL/80150574_5/public",
+                        "https://media.falabella.com/falabellaCL/80150574_6/public",
+                        "https://media.falabella.com/falabellaCL/80150574_7/public",
+                        "https://media.falabella.com/falabellaCL/80150574_99/public"
+                    ],
+                    "recommendedUnits": "",
+                    "backendCategoryId": "G19080602"
+                },
+                {
+                    "id": "80150572",
+                    "productId": "80150572",
+                    "displayName": "Smart TV QLED 50\" Q7FA 4K Vision AI (2025) Samsung",
+                    "brand": "SAMSUNG",
+                    "offeringId": "80150572",
+                    "rating": 3.7,
+                    "totalReviews": 3,
+                    "prices": [
+                        {
+                            "label": "",
+                            "originalPrice": "349.990",
+                            "symbol": "$ ",
+                            "type": 1,
+                            "isLoyalty": false,
+                            "opportunidadUnica": true,
+                            "crossed": false
+                        },
+                        {
+                            "label": "",
+                            "originalPrice": "359.990",
+                            "symbol": "$ ",
+                            "type": 3,
+                            "isLoyalty": false,
+                            "opportunidadUnica": false,
+                            "crossed": false
+                        },
+                        {
+                            "label": "",
+                            "originalPrice": "529.990",
+                            "symbol": "$ ",
+                            "type": 2,
+                            "isLoyalty": false,
+                            "opportunidadUnica": false,
+                            "crossed": true
+                        }
+                    ],
+                    "badges": [
+                        {
+                            "position": 2,
+                            "label": "-34%",
+                            "styles": {
+                                "backgroundColor": "#EB0029",
+                                "textColor": "#ffffff"
+                            }
+                        }
+                    ],
+                    "discountBadge": {
+                        "label": "-34%",
+                        "styles": {
+                            "backgroundColor": "#EB0029",
+                            "textColor": "#ffffff"
+                        }
+                    },
+                    "meatStickers": [
+                        {
+                            "label": "BLACK OUT",
+                            "type": "event",
+                            "styles": {
+                                "backgroundColor": "#333333",
+                                "textColor": "#ffffff"
+                            }
+                        }
+                    ],
+                    "url": "https://www.falabella.com/falabella-cl/product/80150572/Smart-TV-QLED-50%22-Q7FA-4K-Vision-AI-(2025)-Samsung/80150572",
+                    "categoryPaths": [],
+                    "sellerName": "FALABELLA",
+                    "mediaUrls": [
+                        "https://media.falabella.com/falabellaCL/80150572_1/public",
+                        "https://media.falabella.com/falabellaCL/80150572_2/public",
+                        "https://media.falabella.com/falabellaCL/80150572_3/public",
+                        "https://media.falabella.com/falabellaCL/80150572_4/public",
+                        "https://media.falabella.com/falabellaCL/80150572_5/public",
+                        "https://media.falabella.com/falabellaCL/80150572_6/public",
+                        "https://media.falabella.com/falabellaCL/80150572_7/public",
+                        "https://media.falabella.com/falabellaCL/80150572_99/public"
+                    ],
+                    "recommendedUnits": "",
+                    "backendCategoryId": "G19080602"
+                },
+                {
+                    "id": "128656538",
+                    "productId": "128656536",
+                    "displayName": "Smart TV Caixun LED 43 FHD Roku TV C43V1FR",
+                    "brand": "CAIXUN",
+                    "offeringId": "128656538",
+                    "rating": 4.4,
+                    "totalReviews": 72,
+                    "prices": [
+                        {
+                            "label": "",
+                            "originalPrice": "149.990",
+                            "symbol": "$ ",
+                            "type": 1,
+                            "isLoyalty": false,
+                            "opportunidadUnica": true,
+                            "crossed": false
+                        },
+                        {
+                            "label": "",
+                            "originalPrice": "154.990",
+                            "symbol": "$ ",
+                            "type": 3,
+                            "isLoyalty": false,
+                            "opportunidadUnica": false,
+                            "crossed": false
+                        },
+                        {
+                            "label": "",
+                            "originalPrice": "299.990",
+                            "symbol": "$ ",
+                            "type": 2,
+                            "isLoyalty": false,
+                            "opportunidadUnica": false,
+                            "crossed": true
+                        }
+                    ],
+                    "badges": [
+                        {
+                            "position": 2,
+                            "label": "-50%",
+                            "styles": {
+                                "backgroundColor": "#EB0029",
+                                "textColor": "#ffffff"
+                            }
+                        }
+                    ],
+                    "discountBadge": {
+                        "label": "-50%",
+                        "styles": {
+                            "backgroundColor": "#EB0029",
+                            "textColor": "#ffffff"
+                        }
+                    },
+                    "meatStickers": [
+                        {
+                            "label": "BLACK OUT",
+                            "type": "event",
+                            "styles": {
+                                "backgroundColor": "#333333",
+                                "textColor": "#ffffff"
+                            }
+                        }
+                    ],
+                    "url": "https://www.falabella.com/falabella-cl/product/128656536/Smart-TV-Caixun-LED-43-FHD-Roku-TV-C43V1FR/128656538",
+                    "categoryPaths": [],
+                    "sellerName": "CAIXUN",
+                    "mediaUrls": [
+                        "https://media.falabella.com/falabellaCL/128656538_01/public",
+                        "https://media.falabella.com/falabellaCL/128656538_02/public",
+                        "https://media.falabella.com/falabellaCL/128656538_03/public",
+                        "https://media.falabella.com/falabellaCL/128656538_04/public",
+                        "https://media.falabella.com/falabellaCL/128656538_05/public",
+                        "https://media.falabella.com/falabellaCL/128656538_06/public",
+                        "https://media.falabella.com/falabellaCL/128656538_07/public",
+                        "https://media.falabella.com/falabellaCL/128656538_08/public"
+                    ],
+                    "recommendedUnits": "",
+                    "backendCategoryId": "G19080602"
+                },
+                {
+                    "id": "16880716",
+                    "productId": "16880716",
+                    "displayName": "LED Smart TV 50\" 50PUD7408 4K Ultra HD Philips",
+                    "brand": "PHILIPS",
+                    "offeringId": "16880716",
+                    "rating": 4.4,
+                    "totalReviews": 102,
+                    "prices": [
+                        {
+                            "label": "",
+                            "originalPrice": "269.990",
+                            "symbol": "$ ",
+                            "type": 1,
+                            "isLoyalty": false,
+                            "opportunidadUnica": true,
+                            "crossed": false
+                        },
+                        {
+                            "label": "",
+                            "originalPrice": "279.990",
+                            "symbol": "$ ",
+                            "type": 3,
+                            "isLoyalty": false,
+                            "opportunidadUnica": false,
+                            "crossed": false
+                        },
+                        {
+                            "label": "",
+                            "originalPrice": "449.990",
+                            "symbol": "$ ",
+                            "type": 2,
+                            "isLoyalty": false,
+                            "opportunidadUnica": false,
+                            "crossed": true
+                        }
+                    ],
+                    "badges": [
+                        {
+                            "position": 2,
+                            "label": "-40%",
+                            "styles": {
+                                "backgroundColor": "#EB0029",
+                                "textColor": "#ffffff"
+                            }
+                        }
+                    ],
+                    "discountBadge": {
+                        "label": "-40%",
+                        "styles": {
+                            "backgroundColor": "#EB0029",
+                            "textColor": "#ffffff"
+                        }
+                    },
+                    "meatStickers": [
+                        {
+                            "label": "BLACK OUT",
+                            "type": "event",
+                            "styles": {
+                                "backgroundColor": "#333333",
+                                "textColor": "#ffffff"
+                            }
+                        }
+                    ],
+                    "url": "https://www.falabella.com/falabella-cl/product/16880716/LED-Smart-TV-50-50PUD7408-4K-Ultra-HD-Philips/16880716",
+                    "categoryPaths": [],
+                    "sellerName": "FALABELLA",
+                    "mediaUrls": [
+                        "https://media.falabella.com/falabellaCL/16880716_1/public",
+                        "https://media.falabella.com/falabellaCL/16880716_2/public",
+                        "https://media.falabella.com/falabellaCL/16880716_3/public",
+                        "https://media.falabella.com/falabellaCL/16880716_4/public",
+                        "https://media.falabella.com/falabellaCL/16880716_5/public",
+                        "https://media.falabella.com/falabellaCL/16880716_6/public",
+                        "https://media.falabella.com/falabellaCL/16880716_7/public",
+                        "https://media.falabella.com/falabellaCL/16880716_98/public",
+                        "https://media.falabella.com/falabellaCL/16880716_99/public"
+                    ],
+                    "recommendedUnits": "",
+                    "backendCategoryId": "G19080602"
+                },
+                {
+                    "id": "17152723",
+                    "productId": "17152723",
+                    "displayName": "LED Smart TV 65\" 65A6N 4K Ultra HD Hisense",
+                    "brand": "HISENSE",
+                    "offeringId": "17152723",
+                    "rating": 4.9,
+                    "totalReviews": 28,
+                    "prices": [
+                        {
+                            "label": "",
+                            "originalPrice": "389.990",
+                            "symbol": "$ ",
+                            "type": 1,
+                            "isLoyalty": false,
+                            "opportunidadUnica": true,
+                            "crossed": false
+                        },
+                        {
+                            "label": "",
+                            "originalPrice": "399.990",
+                            "symbol": "$ ",
+                            "type": 3,
+                            "isLoyalty": false,
+                            "opportunidadUnica": false,
+                            "crossed": false
+                        },
+                        {
+                            "label": "",
+                            "originalPrice": "659.990",
+                            "symbol": "$ ",
+                            "type": 2,
+                            "isLoyalty": false,
+                            "opportunidadUnica": false,
+                            "crossed": true
+                        }
+                    ],
+                    "badges": [
+                        {
+                            "position": 2,
+                            "label": "-41%",
+                            "styles": {
+                                "backgroundColor": "#EB0029",
+                                "textColor": "#ffffff"
+                            }
+                        }
+                    ],
+                    "discountBadge": {
+                        "label": "-41%",
+                        "styles": {
+                            "backgroundColor": "#EB0029",
+                            "textColor": "#ffffff"
+                        }
+                    },
+                    "meatStickers": [
+                        {
+                            "label": "BLACK OUT",
+                            "type": "event",
+                            "styles": {
+                                "backgroundColor": "#333333",
+                                "textColor": "#ffffff"
+                            }
+                        }
+                    ],
+                    "url": "https://www.falabella.com/falabella-cl/product/17152723/LED-Smart-TV-65-65A6N-4K-Ultra-HD-Hisense/17152723",
+                    "categoryPaths": [],
+                    "sellerName": "FALABELLA",
+                    "mediaUrls": [
+                        "https://media.falabella.com/falabellaCL/17152723_1/public",
+                        "https://media.falabella.com/falabellaCL/17152723_2/public",
+                        "https://media.falabella.com/falabellaCL/17152723_3/public",
+                        "https://media.falabella.com/falabellaCL/17152723_4/public",
+                        "https://media.falabella.com/falabellaCL/17152723_5/public",
+                        "https://media.falabella.com/falabellaCL/17152723_6/public",
+                        "https://media.falabella.com/falabellaCL/17152723_7/public",
+                        "https://media.falabella.com/falabellaCL/17152723_8/public",
+                        "https://media.falabella.com/falabellaCL/17152723_9/public",
+                        "https://media.falabella.com/falabellaCL/17152723_91/public",
+                        "https://media.falabella.com/falabellaCL/17152723_97/public"
+                    ],
+                    "recommendedUnits": "",
+                    "backendCategoryId": "G19080602"
+                },
+                {
+                    "id": "80146380",
+                    "productId": "80146380",
+                    "displayName": "Smart TV 4K Crystal UHD 55\" U8000F (2025) Samsung",
+                    "brand": "SAMSUNG",
+                    "offeringId": "80146380",
+                    "rating": 4.9,
+                    "totalReviews": 7,
+                    "prices": [
+                        {
+                            "label": "",
+                            "originalPrice": "359.990",
+                            "symbol": "$ ",
+                            "type": 1,
+                            "isLoyalty": false,
+                            "opportunidadUnica": true,
+                            "crossed": false
+                        },
+                        {
+                            "label": "",
+                            "originalPrice": "379.990",
+                            "symbol": "$ ",
+                            "type": 3,
+                            "isLoyalty": false,
+                            "opportunidadUnica": false,
+                            "crossed": false
+                        },
+                        {
+                            "label": "",
+                            "originalPrice": "579.990",
+                            "symbol": "$ ",
+                            "type": 2,
+                            "isLoyalty": false,
+                            "opportunidadUnica": false,
+                            "crossed": true
+                        }
+                    ],
+                    "badges": [
+                        {
+                            "position": 2,
+                            "label": "-38%",
+                            "styles": {
+                                "backgroundColor": "#EB0029",
+                                "textColor": "#ffffff"
+                            }
+                        }
+                    ],
+                    "discountBadge": {
+                        "label": "-38%",
+                        "styles": {
+                            "backgroundColor": "#EB0029",
+                            "textColor": "#ffffff"
+                        }
+                    },
+                    "meatStickers": [
+                        {
+                            "label": "BLACK OUT",
+                            "type": "event",
+                            "styles": {
+                                "backgroundColor": "#333333",
+                                "textColor": "#ffffff"
+                            }
+                        }
+                    ],
+                    "url": "https://www.falabella.com/falabella-cl/product/80146380/Smart-TV-4K-Crystal-UHD-55%22-U8000F-(2025)-Samsung/80146380",
+                    "categoryPaths": [],
+                    "sellerName": "FALABELLA",
+                    "mediaUrls": [
+                        "https://media.falabella.com/falabellaCL/80146380_1/public",
+                        "https://media.falabella.com/falabellaCL/80146380_2/public",
+                        "https://media.falabella.com/falabellaCL/80146380_3/public",
+                        "https://media.falabella.com/falabellaCL/80146380_4/public",
+                        "https://media.falabella.com/falabellaCL/80146380_5/public",
+                        "https://media.falabella.com/falabellaCL/80146380_6/public",
+                        "https://media.falabella.com/falabellaCL/80146380_7/public",
+                        "https://media.falabella.com/falabellaCL/80146380_98/public"
+                    ],
+                    "recommendedUnits": "",
+                    "backendCategoryId": "G19080602"
+                },
+                {
+                    "id": "132994649",
+                    "productId": "132994648",
+                    "displayName": "Smart TV Caixun LED 65 UHD 4K Google TV C65V1UG",
+                    "brand": "CAIXUN",
+                    "offeringId": "132994649",
+                    "rating": 4.4,
+                    "totalReviews": 24,
+                    "prices": [
+                        {
+                            "label": "",
+                            "originalPrice": "349.990",
+                            "symbol": "$ ",
+                            "type": 1,
+                            "isLoyalty": false,
+                            "opportunidadUnica": true,
+                            "crossed": false
+                        },
+                        {
+                            "label": "",
+                            "originalPrice": "359.990",
+                            "symbol": "$ ",
+                            "type": 3,
+                            "isLoyalty": false,
+                            "opportunidadUnica": false,
+                            "crossed": false
+                        },
+                        {
+                            "label": "",
+                            "originalPrice": "699.990",
+                            "symbol": "$ ",
+                            "type": 2,
+                            "isLoyalty": false,
+                            "opportunidadUnica": false,
+                            "crossed": true
+                        }
+                    ],
+                    "badges": [
+                        {
+                            "position": 2,
+                            "label": "-50%",
+                            "styles": {
+                                "backgroundColor": "#EB0029",
+                                "textColor": "#ffffff"
+                            }
+                        }
+                    ],
+                    "discountBadge": {
+                        "label": "-50%",
+                        "styles": {
+                            "backgroundColor": "#EB0029",
+                            "textColor": "#ffffff"
+                        }
+                    },
+                    "meatStickers": [
+                        {
+                            "label": "BLACK OUT",
+                            "type": "event",
+                            "styles": {
+                                "backgroundColor": "#333333",
+                                "textColor": "#ffffff"
+                            }
+                        }
+                    ],
+                    "url": "https://www.falabella.com/falabella-cl/product/132994648/Smart-TV-Caixun-LED-65-UHD-4K-Google-TV-C65V1UG/132994649",
+                    "categoryPaths": [],
+                    "sellerName": "CAIXUN",
+                    "mediaUrls": [
+                        "https://media.falabella.com/falabellaCL/132994649_01/public",
+                        "https://media.falabella.com/falabellaCL/132994649_02/public",
+                        "https://media.falabella.com/falabellaCL/132994649_03/public",
+                        "https://media.falabella.com/falabellaCL/132994649_04/public",
+                        "https://media.falabella.com/falabellaCL/132994649_05/public",
+                        "https://media.falabella.com/falabellaCL/132994649_06/public",
+                        "https://media.falabella.com/falabellaCL/132994649_07/public",
+                        "https://media.falabella.com/falabellaCL/132994649_08/public"
+                    ],
+                    "recommendedUnits": "",
+                    "backendCategoryId": "G19080602"
+                },
+                {
+                    "id": "142935316",
+                    "productId": "142935315",
+                    "displayName": "Smart TV Led 55\" Google TV 4K UHD Bluetooth MGG55UFKG",
+                    "brand": "MASTER G",
+                    "offeringId": "142935316",
+                    "rating": 4.9,
+                    "totalReviews": 21,
+                    "prices": [
+                        {
+                            "label": "",
+                            "originalPrice": "259.990",
+                            "symbol": "$ ",
+                            "type": 1,
+                            "isLoyalty": false,
+                            "opportunidadUnica": true,
+                            "crossed": false
+                        },
+                        {
+                            "label": "",
+                            "originalPrice": "279.990",
+                            "symbol": "$ ",
+                            "type": 3,
+                            "isLoyalty": false,
+                            "opportunidadUnica": false,
+                            "crossed": false
+                        },
+                        {
+                            "label": "",
+                            "originalPrice": "449.990",
+                            "symbol": "$ ",
+                            "type": 2,
+                            "isLoyalty": false,
+                            "opportunidadUnica": false,
+                            "crossed": true
+                        }
+                    ],
+                    "badges": [
+                        {
+                            "position": 2,
+                            "label": "-42%",
+                            "styles": {
+                                "backgroundColor": "#EB0029",
+                                "textColor": "#ffffff"
+                            }
+                        }
+                    ],
+                    "discountBadge": {
+                        "label": "-42%",
+                        "styles": {
+                            "backgroundColor": "#EB0029",
+                            "textColor": "#ffffff"
+                        }
+                    },
+                    "meatStickers": [
+                        {
+                            "label": "BLACK OUT",
+                            "type": "event",
+                            "styles": {
+                                "backgroundColor": "#333333",
+                                "textColor": "#ffffff"
+                            }
+                        }
+                    ],
+                    "url": "https://www.falabella.com/falabella-cl/product/142935315/Smart-TV-Led-55-Google-TV-4K-UHD-Bluetooth-MGG55UFKG/142935316",
+                    "categoryPaths": [],
+                    "sellerName": "Gasei",
+                    "mediaUrls": [
+                        "https://media.falabella.com/falabellaCL/142935316_01/public",
+                        "https://media.falabella.com/falabellaCL/142935316_02/public",
+                        "https://media.falabella.com/falabellaCL/142935316_03/public",
+                        "https://media.falabella.com/falabellaCL/142935316_04/public",
+                        "https://media.falabella.com/falabellaCL/142935316_05/public",
+                        "https://media.falabella.com/falabellaCL/142935316_06/public",
+                        "https://media.falabella.com/falabellaCL/142935316_07/public"
+                    ],
+                    "recommendedUnits": "",
+                    "backendCategoryId": "G19080602"
+                },
+                {
+                    "id": "17112087",
+                    "productId": "17112087",
+                    "displayName": "Televisor NanoCell 43 Pulgadas Smart TV 4K UHD 43NANO80TSA + Magic Remote LG",
+                    "brand": "LG",
+                    "offeringId": "17112087",
+                    "rating": 4.5,
+                    "totalReviews": 71,
+                    "prices": [
+                        {
+                            "label": "",
+                            "originalPrice": "289.990",
+                            "symbol": "$ ",
+                            "type": 1,
+                            "isLoyalty": false,
+                            "opportunidadUnica": true,
+                            "crossed": false
+                        },
+                        {
+                            "label": "",
+                            "originalPrice": "299.990",
+                            "symbol": "$ ",
+                            "type": 3,
+                            "isLoyalty": false,
+                            "opportunidadUnica": false,
+                            "crossed": false
+                        },
+                        {
+                            "label": "",
+                            "originalPrice": "504.990",
+                            "symbol": "$ ",
+                            "type": 2,
+                            "isLoyalty": false,
+                            "opportunidadUnica": false,
+                            "crossed": true
+                        }
+                    ],
+                    "badges": [
+                        {
+                            "position": 2,
+                            "label": "-43%",
+                            "styles": {
+                                "backgroundColor": "#EB0029",
+                                "textColor": "#ffffff"
+                            }
+                        }
+                    ],
+                    "discountBadge": {
+                        "label": "-43%",
+                        "styles": {
+                            "backgroundColor": "#EB0029",
+                            "textColor": "#ffffff"
+                        }
+                    },
+                    "meatStickers": [
+                        {
+                            "label": "BLACK OUT",
+                            "type": "event",
+                            "styles": {
+                                "backgroundColor": "#333333",
+                                "textColor": "#ffffff"
+                            }
+                        }
+                    ],
+                    "url": "https://www.falabella.com/falabella-cl/product/17112087/Televisor-NanoCell-43-Pulgadas-Smart-TV-4K-UHD-43NANO80TSA-+-Magic-Remote-LG/17112087",
+                    "categoryPaths": [],
+                    "sellerName": "FALABELLA",
+                    "mediaUrls": [
+                        "https://media.falabella.com/falabellaCL/17112087_1/public",
+                        "https://media.falabella.com/falabellaCL/17112087_2/public",
+                        "https://media.falabella.com/falabellaCL/17112087_3/public",
+                        "https://media.falabella.com/falabellaCL/17112087_4/public",
+                        "https://media.falabella.com/falabellaCL/17112087_5/public",
+                        "https://media.falabella.com/falabellaCL/17112087_6/public",
+                        "https://media.falabella.com/falabellaCL/17112087_7/public",
+                        "https://media.falabella.com/falabellaCL/17112087_8/public",
+                        "https://media.falabella.com/falabellaCL/17112087_98/public",
+                        "https://media.falabella.com/falabellaCL/17112087_99/public"
+                    ],
+                    "recommendedUnits": "",
+                    "backendCategoryId": "G19080602"
+                },
+                {
+                    "id": "17152722",
+                    "productId": "17152722",
+                    "displayName": "LED Smart TV 58\" 58A6N 4K Ultra HD Hisense",
+                    "brand": "HISENSE",
+                    "offeringId": "17152722",
+                    "rating": 4.6,
+                    "totalReviews": 38,
+                    "prices": [
+                        {
+                            "label": "",
+                            "originalPrice": "319.990",
+                            "symbol": "$ ",
+                            "type": 3,
+                            "isLoyalty": false,
+                            "opportunidadUnica": false,
+                            "crossed": false
+                        },
+                        {
+                            "label": "",
+                            "originalPrice": "499.990",
+                            "symbol": "$ ",
+                            "type": 2,
+                            "isLoyalty": false,
+                            "opportunidadUnica": false,
+                            "crossed": true
+                        }
+                    ],
+                    "badges": [
+                        {
+                            "position": 2,
+                            "label": "-36%",
+                            "styles": {
+                                "backgroundColor": "#EB0029",
+                                "textColor": "#ffffff"
+                            }
+                        }
+                    ],
+                    "discountBadge": {
+                        "label": "-36%",
+                        "styles": {
+                            "backgroundColor": "#EB0029",
+                            "textColor": "#ffffff"
+                        }
+                    },
+                    "meatStickers": [],
+                    "url": "https://www.falabella.com/falabella-cl/product/17152722/LED-Smart-TV-58-58A6N-4K-Ultra-HD-Hisense/17152722",
+                    "categoryPaths": [],
+                    "sellerName": "FALABELLA",
+                    "mediaUrls": [
+                        "https://media.falabella.com/falabellaCL/17152722_1/public",
+                        "https://media.falabella.com/falabellaCL/17152722_2/public",
+                        "https://media.falabella.com/falabellaCL/17152722_3/public",
+                        "https://media.falabella.com/falabellaCL/17152722_4/public",
+                        "https://media.falabella.com/falabellaCL/17152722_5/public",
+                        "https://media.falabella.com/falabellaCL/17152722_6/public",
+                        "https://media.falabella.com/falabellaCL/17152722_7/public",
+                        "https://media.falabella.com/falabellaCL/17152722_8/public",
+                        "https://media.falabella.com/falabellaCL/17152722_9/public",
+                        "https://media.falabella.com/falabellaCL/17152722_91/public",
+                        "https://media.falabella.com/falabellaCL/17152722_97/public"
+                    ],
+                    "recommendedUnits": "",
+                    "backendCategoryId": "G19080602"
+                },
+                {
+                    "id": "129765381",
+                    "productId": "129765380",
+                    "displayName": "Smart TV Caixun LED 50 UHD 4K Google TV C50V1UG",
+                    "brand": "CAIXUN",
+                    "offeringId": "129765381",
+                    "rating": 4.6,
+                    "totalReviews": 162,
+                    "prices": [
+                        {
+                            "label": "",
+                            "originalPrice": "214.990",
+                            "symbol": "$ ",
+                            "type": 1,
+                            "isLoyalty": false,
+                            "opportunidadUnica": true,
+                            "crossed": false
+                        },
+                        {
+                            "label": "",
+                            "originalPrice": "219.990",
+                            "symbol": "$ ",
+                            "type": 3,
+                            "isLoyalty": false,
+                            "opportunidadUnica": false,
+                            "crossed": false
+                        },
+                        {
+                            "label": "",
+                            "originalPrice": "349.990",
+                            "symbol": "$ ",
+                            "type": 2,
+                            "isLoyalty": false,
+                            "opportunidadUnica": false,
+                            "crossed": true
+                        }
+                    ],
+                    "badges": [
+                        {
+                            "position": 2,
+                            "label": "-39%",
+                            "styles": {
+                                "backgroundColor": "#EB0029",
+                                "textColor": "#ffffff"
+                            }
+                        }
+                    ],
+                    "discountBadge": {
+                        "label": "-39%",
+                        "styles": {
+                            "backgroundColor": "#EB0029",
+                            "textColor": "#ffffff"
+                        }
+                    },
+                    "meatStickers": [
+                        {
+                            "label": "BLACK OUT",
+                            "type": "event",
+                            "styles": {
+                                "backgroundColor": "#333333",
+                                "textColor": "#ffffff"
+                            }
+                        }
+                    ],
+                    "url": "https://www.falabella.com/falabella-cl/product/129765380/Smart-TV-Caixun-LED-50-UHD-4K-Google-TV-C50V1UG/129765381",
+                    "categoryPaths": [],
+                    "sellerName": "CAIXUN",
+                    "mediaUrls": [
+                        "https://media.falabella.com/falabellaCL/129765381_01/public",
+                        "https://media.falabella.com/falabellaCL/129765381_02/public",
+                        "https://media.falabella.com/falabellaCL/129765381_03/public",
+                        "https://media.falabella.com/falabellaCL/129765381_04/public",
+                        "https://media.falabella.com/falabellaCL/129765381_05/public",
+                        "https://media.falabella.com/falabellaCL/129765381_06/public",
+                        "https://media.falabella.com/falabellaCL/129765381_07/public",
+                        "https://media.falabella.com/falabellaCL/129765381_08/public"
+                    ],
+                    "recommendedUnits": "",
+                    "backendCategoryId": "G19080602"
+                },
+                {
+                    "id": "17310496",
+                    "productId": "17310496",
+                    "displayName": "Smart TV LG LED 43\" 43LR6000PSA Full HD",
+                    "brand": "LG",
+                    "offeringId": "17310496",
+                    "rating": 4.8,
+                    "totalReviews": 20,
+                    "prices": [
+                        {
+                            "label": "",
+                            "originalPrice": "214.990",
+                            "symbol": "$ ",
+                            "type": 1,
+                            "isLoyalty": false,
+                            "opportunidadUnica": true,
+                            "crossed": false
+                        },
+                        {
+                            "label": "",
+                            "originalPrice": "219.990",
+                            "symbol": "$ ",
+                            "type": 3,
+                            "isLoyalty": false,
+                            "opportunidadUnica": false,
+                            "crossed": false
+                        },
+                        {
+                            "label": "",
+                            "originalPrice": "299.990",
+                            "symbol": "$ ",
+                            "type": 2,
+                            "isLoyalty": false,
+                            "opportunidadUnica": false,
+                            "crossed": true
+                        }
+                    ],
+                    "badges": [
+                        {
+                            "position": 2,
+                            "label": "-28%",
+                            "styles": {
+                                "backgroundColor": "#EB0029",
+                                "textColor": "#ffffff"
+                            }
+                        }
+                    ],
+                    "discountBadge": {
+                        "label": "-28%",
+                        "styles": {
+                            "backgroundColor": "#EB0029",
+                            "textColor": "#ffffff"
+                        }
+                    },
+                    "meatStickers": [
+                        {
+                            "label": "BLACK OUT",
+                            "type": "event",
+                            "styles": {
+                                "backgroundColor": "#333333",
+                                "textColor": "#ffffff"
+                            }
+                        }
+                    ],
+                    "url": "https://www.falabella.com/falabella-cl/product/17310496/Smart-TV-LG-LED-43-43LR6000PSA-Full-HD/17310496",
+                    "categoryPaths": [],
+                    "sellerName": "FALABELLA",
+                    "mediaUrls": [
+                        "https://media.falabella.com/falabellaCL/17310496_1/public",
+                        "https://media.falabella.com/falabellaCL/17310496_2/public",
+                        "https://media.falabella.com/falabellaCL/17310496_3/public",
+                        "https://media.falabella.com/falabellaCL/17310496_4/public",
+                        "https://media.falabella.com/falabellaCL/17310496_5/public",
+                        "https://media.falabella.com/falabellaCL/17310496_6/public",
+                        "https://media.falabella.com/falabellaCL/17310496_98/public",
+                        "https://media.falabella.com/falabellaCL/17310496_99/public"
+                    ],
+                    "recommendedUnits": "",
+                    "backendCategoryId": "G19080602"
+                }
+            ],
+            "slot": {
+                "orientation": "",
+                "position": "HOME-HRT-41"
+            },
+            "config": {
+                "hideTitle": false,
+                "componentStyle": "generic"
+            }
+        }
+    ]
+}
