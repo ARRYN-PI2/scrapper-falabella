@@ -1,0 +1,436 @@
+import time
+import json
+import re
+import random
+import logging
+from dataclasses import dataclass, asdict
+from typing import List, Tuple, Optional
+from datetime import datetime
+
+from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+
+from selenium.common.exceptions import (
+    StaleElementReferenceException,
+    ElementClickInterceptedException,
+    TimeoutException,
+    NoSuchElementException,
+)
+
+from webdriver_manager.chrome import ChromeDriverManager
+
+
+# =========================
+# CONFIG & LOGGING
+# =========================
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s [%(levelname)s] %(message)s"
+)
+LOGGER = logging.getLogger("falabella_scraper")
+
+SEARCH_URL = "https://www.falabella.com.co/falabella-co/search?Ntt=Televisores"
+
+TV_PAT = re.compile(r"\b(tv|televisor(?:es)?|smart\s*tv)\b", re.I)
+
+
+# =========================
+# UTILIDADES / PARSEOS
+# =========================
+def limpiar_precio(precio_raw: str) -> Tuple[str, Optional[int], Optional[str]]:
+    """
+    Normaliza el precio y devuelve:
+    (texto_normalizado, valor_numérico_entero, moneda)
+    """
+    if not precio_raw or precio_raw == "N/A":
+        return ("N/A", None, None)
+    m = re.search(r"(\$)\s*([\d\.\,]+)", precio_raw)
+    if not m:
+        return ("N/A", None, None)
+    simbolo, cifra = m.group(1), m.group(2)
+    # LATAM: "." miles, "," decimales. Para COP usualmente entero.
+    valor = int(re.sub(r"[^\d]", "", cifra))
+    return (f"{simbolo} {cifra}", valor, "COP")
+
+
+def extraer_tamano(titulo: str) -> str:
+    m = re.search(r'(\d{2,3})\s*(?:["”]|pulgadas?|in\b)', titulo, re.I)
+    return (m.group(1) + '"') if m else "N/A"
+
+
+def parsear_marca_desde_titulo(titulo: str) -> str:
+    """
+    Heurística simple: primera palabra “significativa”.
+    """
+    partes = re.split(r"\s+|-|–|—", titulo)
+    for p in partes:
+        w = re.sub(r"[^A-Za-zÁÉÍÓÚÜÑáéíóúüñ0-9]", "", p)
+        if w and w.lower() not in {"tv", "smart", "led", "uhd", "4k", "full", "hd"} and len(w) >= 2:
+            return w.upper()
+    return "N/A"
+
+
+# =========================
+# EXTRACCIONES / SELECTORES
+# =========================
+def scroll_cargar_todos(
+    driver,
+    contenedor_selector="#testId-searchResults-products",
+    max_sin_cambios=6,
+    paso_px=1600,
+    espera=2.0
+) -> int:
+    """
+    Scrollea hasta que no haya cambios de altura / nuevos pods por 'max_sin_cambios' iteraciones.
+    """
+    seen = 0
+    sin_cambios = 0
+    last_height = driver.execute_script("return document.body.scrollHeight")
+    while sin_cambios < max_sin_cambios:
+        driver.execute_script(f"window.scrollBy(0, {paso_px});")
+        time.sleep(espera)
+        try:
+            contenedor = driver.find_element(By.CSS_SELECTOR, contenedor_selector)
+            pods = contenedor.find_elements(By.CSS_SELECTOR, "a[data-pod='catalyst-pod']")
+            nuevos = len(pods)
+        except StaleElementReferenceException:
+            nuevos = seen  # reintenta en siguiente ciclo
+
+        height = driver.execute_script("return document.body.scrollHeight")
+        if nuevos == seen and height == last_height:
+            sin_cambios += 1
+        else:
+            sin_cambios = 0
+            seen = nuevos
+            last_height = height
+    return seen
+
+
+def extraer_precio(pod) -> Tuple[str, Optional[int], Optional[str]]:
+    """
+    Busca precio en distintos selectores y lo normaliza.
+    """
+    selectores = [
+        "[data-testid='current-price']",
+        "span[data-testid*='current']",
+        "[class*='price']",
+        "li[class*='price']",
+        "span"
+    ]
+    for sel in selectores:
+        for el in pod.find_elements(By.CSS_SELECTOR, sel):
+            txt = el.text.strip()
+            if "$" in txt:
+                return limpiar_precio(txt)
+    return ("N/A", None, None)
+
+
+def extraer_calificacion_listado(pod) -> str:
+    try:
+        el = pod.find_element(By.CSS_SELECTOR, "[data-rating]")
+        val = el.get_attribute("data-rating")
+        return val.strip() if val else "N/A"
+    except NoSuchElementException:
+        return "N/A"
+    except Exception:
+        return "N/A"
+
+
+def extraer_calificacion_ficha(driver) -> str:
+    """
+    Fallback en la ficha usando aria-label estilo "4.5 de 5".
+    """
+    try:
+        el = driver.find_element(By.XPATH, "//*[@aria-label[contains(., 'de 5')]]")
+        t = el.get_attribute("aria-label") or el.text
+        m = re.search(r"(\d+(?:[.,]\d+)?)\s*de\s*5", t or "", re.I)
+        return m.group(1).replace(",", ".") if m else "N/A"
+    except Exception:
+        return "N/A"
+
+
+def extraer_detalles_ficha(driver) -> str:
+    """
+    Devuelve el TEXTO PLANO del div#productInfoContainer
+    (sin etiquetas, sólo contenido visible).
+    """
+    try:
+        el = WebDriverWait(driver, 12).until(
+            EC.presence_of_element_located((By.CSS_SELECTOR, "#productInfoContainer"))
+        )
+        return el.text.strip()
+    except Exception:
+        return ""
+
+
+
+# =========================
+# MODELO DE DATO
+# =========================
+@dataclass
+class Producto:
+    contador_extraccion: int
+    titulo: str
+    marca: str
+    precio_texto: str
+    precio_valor: Optional[int]
+    moneda: Optional[str]
+    tamaño: str
+    calificacion: str
+    detalles_adicionales: str  # NUEVO: HTML crudo del productInfoContainer
+    fuente: str
+    categoria: str
+    imagen: str
+    link: str
+    pagina: int
+    fecha_extraccion: str
+    extraction_status: str
+
+
+# =========================
+# EXTRACCIÓN DE UNA PÁGINA
+# =========================
+def extraer_productos_pagina(
+    driver,
+    contador_inicio=1,
+    pagina_actual=1,
+    obtener_detalles=True  # por defecto True según tu requerimiento
+) -> Tuple[List[Producto], int]:
+    scroll_cargar_todos(driver)
+    pods = driver.find_elements(By.CSS_SELECTOR, "#testId-searchResults-products a[data-pod='catalyst-pod']")
+    LOGGER.info(f"Pods detectados en página {pagina_actual}: {len(pods)}")
+
+    productos: List[Producto] = []
+    contador = contador_inicio
+
+    for i, pod in enumerate(pods, start=1):
+        try:
+            link = pod.get_attribute("href")
+            if not link:
+                continue
+
+            img_elem = pod.find_elements(By.CSS_SELECTOR, "img[id^='testId-pod-image']")
+            if img_elem:
+                imagen = img_elem[0].get_attribute("src") or "N/A"
+                titulo = img_elem[0].get_attribute("alt") or "N/A"
+            else:
+                titulo_elem = pod.find_elements(By.CSS_SELECTOR, "span, h2, h3, p")
+                titulo = titulo_elem[0].text.strip() if titulo_elem else "N/A"
+                imagen = "N/A"
+
+            # Filtro por TVs más tolerante
+            if not TV_PAT.search(titulo):
+                continue
+
+            marca = parsear_marca_desde_titulo(titulo)
+            precio_txt, precio_num, moneda = extraer_precio(pod)
+            tamano = extraer_tamano(titulo)
+
+            # Intento rápido: rating desde listado
+            calificacion = extraer_calificacion_listado(pod)
+            detalles_adicionales = ""
+
+            # ABRIR FICHA UNA SOLA VEZ para:
+            # - detalles_adicionales (productInfoContainer)
+            # - fallback de calificación
+            if obtener_detalles or calificacion in {"N/A", "", "0"}:
+                original_window = driver.current_window_handle
+                driver.execute_script("window.open(arguments[0]);", link)
+                driver.switch_to.window(driver.window_handles[-1])
+                try:
+                    WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.TAG_NAME, "body")))
+                    time.sleep(random.uniform(1.2, 2.2))
+                    if obtener_detalles:
+                        detalles_adicionales = extraer_detalles_ficha(driver)
+                    if calificacion in {"N/A", "", "0"}:
+                        calificacion = extraer_calificacion_ficha(driver)
+                except Exception:
+                    # deja detalles_adicionales como "", calificacion tal cual si falla
+                    pass
+                finally:
+                    driver.close()
+                    driver.switch_to.window(original_window)
+
+            producto = Producto(
+                contador_extraccion=contador,
+                titulo=titulo,
+                marca=marca,
+                precio_texto=precio_txt,
+                precio_valor=precio_num,
+                moneda=moneda,
+                tamaño=tamano,
+                calificacion=calificacion,
+                detalles_adicionales=detalles_adicionales,  # HTML crudo
+                fuente="Falabella",
+                categoria="Televisores",
+                imagen=imagen,
+                link=link,
+                pagina=pagina_actual,
+                fecha_extraccion=datetime.now().isoformat(),
+                extraction_status="success" if precio_num is not None else "failed"
+            )
+
+            productos.append(producto)
+            LOGGER.debug(f"P{pagina_actual} #{contador}: {marca} | {titulo} | {precio_txt} | {tamano} | ★ {calificacion} | detalles={bool(detalles_adicionales)}")
+            contador += 1
+
+            # Throttle ligero
+            time.sleep(random.uniform(0.3, 0.8))
+
+        except Exception as e:
+            LOGGER.debug(f"Error en pod {i} de página {pagina_actual}: {e}")
+
+    return productos, contador
+
+
+# =========================
+# NAVEGACIÓN PAGINACIÓN
+# =========================
+def ir_a_siguiente_pagina(driver) -> bool:
+    """
+    Intenta clickear el botón de siguiente usando varios selectores.
+    Retorna True si cambia de página (click exitoso con staleness), False si no hay siguiente.
+    """
+    try:
+        driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+        time.sleep(random.uniform(1.0, 2.0))
+
+        posibles_botones = driver.find_elements(By.CSS_SELECTOR, "button[id*='pagination'][id*='arrow-right']")
+        if not posibles_botones:
+            posibles_botones = driver.find_elements(By.CSS_SELECTOR, "button.btn.pagination-arrow")
+        if not posibles_botones:
+            posibles_botones = driver.find_elements(By.CSS_SELECTOR, "li[class*='pagination-arrow'] a, a[class*='pagination-arrow']")
+
+        LOGGER.info(f"Botones 'siguiente' encontrados: {len(posibles_botones)}")
+        if not posibles_botones:
+            return False
+
+        siguiente_btn = posibles_botones[-1]
+        pods = driver.find_elements(By.CSS_SELECTOR, "#testId-searchResults-products a[data-pod='catalyst-pod']")
+        primer_pod = pods[0] if pods else None
+
+        try:
+            driver.execute_script("arguments[0].click();", siguiente_btn)
+        except ElementClickInterceptedException:
+            time.sleep(random.uniform(0.8, 1.5))
+            driver.execute_script("arguments[0].click();", siguiente_btn)
+
+        if primer_pod:
+            WebDriverWait(driver, 15).until(EC.staleness_of(primer_pod))
+        else:
+            WebDriverWait(driver, 10).until(
+                EC.presence_of_element_located((By.CSS_SELECTOR, "#testId-searchResults-products"))
+            )
+        time.sleep(random.uniform(1.0, 2.0))
+        return True
+
+    except TimeoutException:
+        return False
+    except Exception as e:
+        LOGGER.debug(f"No se pudo avanzar a la siguiente página: {e}")
+        return False
+
+
+# =========================
+# DRIVER / OPTIONS
+# =========================
+def crear_driver() -> webdriver.Chrome:
+    options = Options()
+    options.add_argument("--headless=new")
+    options.add_argument("--disable-gpu")
+    options.add_argument("--window-size=1920,1080")
+    options.add_argument("--disable-blink-features=AutomationControlled")
+    options.add_argument("--no-sandbox")
+    options.add_argument("--disable-dev-shm-usage")
+    options.add_argument("--lang=es-CO")
+    options.add_argument("--user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+                         "AppleWebKit/537.36 (KHTML, like Gecko) "
+                         "Chrome/124.0.0.0 Safari/537.36")
+    driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
+    return driver
+
+
+# =========================
+# PERSISTENCIA
+# =========================
+def guardar_json(productos: List[Producto], ruta="productos.json"):
+    with open(ruta, "w", encoding="utf-8") as f:
+        json.dump([asdict(p) for p in productos], f, ensure_ascii=False, indent=4)
+
+
+def append_jsonl(producto: Producto, ruta="productos.jsonl"):
+    with open(ruta, "a", encoding="utf-8") as f:
+        f.write(json.dumps(asdict(producto), ensure_ascii=False) + "\n")
+
+
+# =========================
+# EXTRACCIÓN COMPLETA
+# =========================
+def extraer_todas_paginas(
+    limitar_una_pagina: bool = False,
+    obtener_detalles: bool = True  # por defecto activado según tu pedido
+) -> List[Producto]:
+    driver = crear_driver()
+    try:
+        driver.get(SEARCH_URL)
+        time.sleep(random.uniform(2.5, 4.5))
+
+        productos_totales: List[Producto] = []
+        pagina = 1
+        contador = 1
+        vistos: set[str] = set()
+
+        while True:
+            LOGGER.info(f"Extrayendo página {pagina}...")
+            productos, contador = extraer_productos_pagina(
+                driver,
+                contador_inicio=contador,
+                pagina_actual=pagina,
+                obtener_detalles=obtener_detalles
+            )
+
+            # Deduplicación por link
+            nuevos_filtrados: List[Producto] = []
+            for p in productos:
+                if p.link not in vistos:
+                    vistos.add(p.link)
+                    nuevos_filtrados.append(p)
+                    # Persistencia incremental (JSONL)
+                    append_jsonl(p)
+
+            if not nuevos_filtrados:
+                LOGGER.info("No se encontraron nuevos productos en esta página. Finalizando.")
+                break
+
+            productos_totales.extend(nuevos_filtrados)
+
+            if limitar_una_pagina:
+                LOGGER.info("Modo prueba: limitar a una sola página.")
+                break
+
+            if not ir_a_siguiente_pagina(driver):
+                LOGGER.info("No hay más páginas. Terminando scraping.")
+                break
+
+            pagina += 1
+            time.sleep(random.uniform(1.2, 2.2))
+
+        guardar_json(productos_totales, "productos.json")
+        LOGGER.info(f"Total {len(productos_totales)} productos guardados en productos.json "
+                    f"y productos.jsonl (incremental).")
+        return productos_totales
+
+    finally:
+        driver.quit()
+
+
+# =========================
+# MAIN
+# =========================
+if __name__ == "__main__":
+    # Cambia los flags según necesites:
+    extraer_todas_paginas(limitar_una_pagina=True, obtener_detalles=True)

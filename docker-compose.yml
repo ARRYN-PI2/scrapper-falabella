@@ -1,0 +1,23 @@
+version: "3.9"
+services:
+  selenium:
+    image: selenium/standalone-chrome:125.0
+    shm_size: 2gb
+    healthcheck:
+      test: ["CMD-SHELL", "curl -sf http://localhost:4444/status | jq -e '.value.ready == true' >/dev/null || exit 1"]
+      interval: 10s
+      timeout: 3s
+      retries: 20
+
+  app:
+    build: .
+    environment:
+      - SELENIUM_REMOTE_URL=http://selenium:4444/wd/hub
+      - OUT_DIR=/app/out
+      - PYTHONUNBUFFERED=1
+    depends_on:
+      selenium:
+        condition: service_healthy
+    volumes:
+      - ./out:/app/out              # <--- resultados en ./out (host)
+    restart: unless-stopped         # opcional, recomendable

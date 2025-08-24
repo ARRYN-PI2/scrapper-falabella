@@ -4,6 +4,8 @@ import json
 import re
 import random
 import logging
+import os
+import os.path as osp
 from dataclasses import dataclass, asdict
 from typing import List, Tuple, Optional, Set, Dict
 from datetime import datetime
@@ -33,11 +35,15 @@ logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s [%(levelname)s] %(message)s"
 )
+
+OUT_DIR = os.getenv("OUTPUT_DIR", "/app/out")
+os.makedirs(OUT_DIR, exist_ok=True)
+
 LOGGER = logging.getLogger("falabella_all_scraper")
 
 HOME_URL = "https://www.falabella.com.co/falabella-co/"
-OUTPUT_JSON = "productos_all.json"
-OUTPUT_JSONL = "productos_all.jsonl"
+OUTPUT_JSON = osp.join(OUT_DIR, "productos_all.json")
+OUTPUT_JSONL = osp.join(OUT_DIR, "productos_all.jsonl")
 
 # Limitar cantidad de categorías (None = todas las que encuentre)
 MAX_CATEGORIES: Optional[int] = None  # p.ej. 5 para pruebas
@@ -428,12 +434,17 @@ def crear_driver() -> webdriver.Chrome:
     options.add_argument("--user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
                          "AppleWebKit/537.36 (KHTML, like Gecko) "
                          "Chrome/124.0.0.0 Safari/537.36")
-    # Opcional: evitar warnings WebGL (con menor seguridad):
-    # options.add_argument("--enable-unsafe-swiftshader")
 
-    service = Service(ChromeDriverManager().install(), log_path="chromedriver_all.log")
-    driver = webdriver.Chrome(service=service, options=options)
-    return driver
+    remote_url = os.getenv("SELENIUM_REMOTE_URL")
+    if remote_url:
+        # Usar navegador remoto (Selenium Standalone Chrome)
+        return webdriver.Remote(command_executor=remote_url, options=options)
+    else:
+        # Fallback local (tu código actual con ChromeDriverManager)
+        from selenium.webdriver.chrome.service import Service
+        from webdriver_manager.chrome import ChromeDriverManager
+        service = Service(ChromeDriverManager().install())
+        return webdriver.Chrome(service=service, options=options)
 
 
 # =========================
