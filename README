@@ -1,0 +1,8 @@
+Para ejecutar clonando el repo
+
+- docker compose up --build
+
+Para ejecutar usando la imagen publicada en docker hub
+
+- docker run --rm -v "$(pwd)/out:/app/out" moonsalve/scrapper:latest
+
