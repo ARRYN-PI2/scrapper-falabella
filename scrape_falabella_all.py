@@ -36,7 +36,7 @@ logging.basicConfig(
     format="%(asctime)s [%(levelname)s] %(message)s"
 )
 
-OUT_DIR = os.getenv("OUTPUT_DIR", "/app/out")
+OUT_DIR = osp.join(os.getcwd(), "out")
 os.makedirs(OUT_DIR, exist_ok=True)
 
 LOGGER = logging.getLogger("falabella_all_scraper")
@@ -197,8 +197,11 @@ def obtener_nombre_categoria(driver) -> str:
     Intenta obtener un título/nombre de la categoría desde la página:
     - h1 principal
     - breadcrumb
-    - fallback: derivar desde URL
+    - meta og:title
+    - <title>
+    - fallback: derivar desde URL (evitando tokens tipo cat12345)
     """
+    # 1) H1
     try:
         h1 = driver.find_element(By.TAG_NAME, "h1").text.strip()
         if h1:
@@ -206,27 +209,65 @@ def obtener_nombre_categoria(driver) -> str:
     except Exception:
         pass
 
+    # 2) Breadcrumb (último item)
     try:
-        crumb = driver.find_elements(By.CSS_SELECTOR, "nav [aria-label*='breadcrumb' i], nav[aria-label*='breadcrumb' i]")
+        crumb = driver.find_elements(By.CSS_SELECTOR, "nav [aria-label*='breadcrumb' i], nav[aria-label*='breadcrumb' i], nav.breadcrumb, ol.breadcrumb")
         if crumb:
             txt = crumb[0].text.strip()
             if txt:
-                return txt.split("\n")[-1].strip()
+                last = txt.split("\n")[-1].strip()
+                if last:
+                    return last
     except Exception:
         pass
 
+    # 3) og:title
+    try:
+        og = driver.find_elements(By.CSS_SELECTOR, "meta[property='og:title'], meta[name='og:title']")
+        if og:
+            val = (og[0].get_attribute("content") or "").strip()
+            if val:
+                # limpia sufijos comunes
+                val = re.sub(r"\s*[\|\-–—]\s*Falabella.*$", "", val, flags=re.I).strip()
+                if val:
+                    return val
+    except Exception:
+        pass
+
+    # 4) <title>
+    try:
+        t = (driver.title or "").strip()
+        if t:
+            t = re.sub(r"\s*[\|\-–—]\s*Falabella.*$", "", t, flags=re.I).strip()
+            if t:
+                return t
+    except Exception:
+        pass
+
+    # 5) Fallback URL (evitar cat12345)
     try:
         path = urlparse(driver.current_url).path
         parts = [p for p in path.split("/") if p]
         if "category" in parts:
             idx = parts.index("category")
             if idx + 1 < len(parts):
-                raw = parts[idx + 1]
-                return re.sub(r"[-_]+", " ", raw).strip().title()
+                raw = parts[idx + 1]  # suele ser 'cat12345' o un slug
+                # si es cat + números, no lo uses
+                if not re.fullmatch(r"cat\d+", raw, flags=re.I):
+                    nombre = re.sub(r"[-_]+", " ", raw).strip().title()
+                    if nombre:
+                        return nombre
+        # último segmento
+        if parts:
+            raw = parts[-1]
+            if not re.fullmatch(r"cat\d+", raw, flags=re.I):
+                nombre = re.sub(r"[-_]+", " ", raw).strip().title()
+                if nombre:
+                    return nombre
     except Exception:
         pass
-    return "N/A"
 
+    return "N/A"
 
 # =========================
 # CONTADOR GLOBAL
@@ -535,7 +576,7 @@ def extraer_categoria(
     WebDriverWait(driver, 15).until(EC.presence_of_element_located((By.TAG_NAME, "body")))
     nap(1.2, 2.0)
 
-    categoria_nombre = nombre_categoria or obtener_nombre_categoria(driver) or "N/A"
+    categoria_nombre = obtener_nombre_categoria(driver) or nombre_categoria or "N/A"
     LOGGER.info(f"==> Categoria: {categoria_nombre} | {url_categoria}")
 
     productos_totales: List[Producto] = []
@@ -624,4 +665,38 @@ def extraer_todas_categorias():
 # MAIN
 # =========================
 if __name__ == "__main__":
+    import argparse
+
+    parser = argparse.ArgumentParser(description="Scraper Falabella (opciones básicas).")
+    parser.add_argument(
+        "--max-categories",
+        type=int,
+        default=None,
+        help="Limitar cantidad de categorías (None = todas). Ej: --max-categories 5"
+    )
+    grp = parser.add_mutually_exclusive_group()
+    grp.add_argument(
+        "--one-page",
+        dest="one_page",
+        action="store_true",
+        help="Limitar a 1 página por categoría (modo rápido)"
+    )
+    grp.add_argument(
+        "--multi-page",
+        dest="one_page",
+        action="store_false",
+        help="Permitir múltiples páginas por categoría"
+    )
+    # Por defecto no forzamos cambio si no se pasa flag:
+    parser.set_defaults(one_page=None)
+
+    args = parser.parse_args()
+
+    # Overrides de configuración global según CLI (solo si se pasan flags)
+    if args.max_categories is not None:
+        MAX_CATEGORIES = args.max_categories  # sobrescribe el valor global
+    if args.one_page is not None:
+        LIMIT_ONE_PAGE_PER_CATEGORY = bool(args.one_page)  # True si --one-page, False si --multi-page
+
+    # Ejecuta como siempre con la config (posiblemente) sobrescrita
     extraer_todas_categorias()
