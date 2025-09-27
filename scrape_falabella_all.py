@@ -42,13 +42,19 @@ os.makedirs(OUT_DIR, exist_ok=True)
 LOGGER = logging.getLogger("falabella_all_scraper")
 
 HOME_URL = "https://www.falabella.com.co/falabella-co/"
+
+# Archivos por defecto (fallback). Para scrapes por categoría se redefinen con set_run_outputs(...)
 OUTPUT_JSON = osp.join(OUT_DIR, "productos_all.json")
 OUTPUT_JSONL = osp.join(OUT_DIR, "productos_all.jsonl")
 
-# Limitar cantidad de categorías (None = todas las que encuentre)
-MAX_CATEGORIES: Optional[int] = None  # p.ej. 5 para pruebas
+# Rutas activas de salida (se actualizan por corrida)
+RUN_JSON = OUTPUT_JSON
+RUN_JSONL = OUTPUT_JSONL
 
-# ⚠️ Por defecto: permitir múltiples páginas por categoría
+# Limitar cantidad de categorías al ejecutar TODAS (None = todas)
+MAX_CATEGORIES: Optional[int] = None
+
+# Por defecto: permitir múltiples páginas por categoría
 LIMIT_ONE_PAGE_PER_CATEGORY: bool = False
 
 # Modo rápido global (se puede activar por CLI con --fast)
@@ -63,8 +69,41 @@ PROMO_TITLE_PAT = re.compile(
 # Filtrar títulos tipo "Por X"
 TITLE_EXCLUDE_PAT = re.compile(r'^\s*por\b', re.I)
 
+
 def nap(a=0.4, b=1.0):
     time.sleep(random.uniform(a, b))
+
+
+def slugify(txt: str) -> str:
+    """Convierte un nombre en un slug simple para archivos."""
+    t = txt.strip().lower()
+    t = re.sub(r"\s+", "_", t)
+    t = re.sub(r"[^\w\-]+", "", t)  # deja letras/números/guion_bajo/guion
+    return t or "salida"
+
+
+def set_run_outputs(nombre_categoria: str) -> None:
+    """
+    Define archivos por corrida/categoría usando la CLAVE de EXPECTED_URLS (o el nombre pasado por CLI).
+    Se crean/l limpian:
+    - {slug}_formatted.json
+    - {slug}_formatted.jsonl
+    """
+    global RUN_JSON, RUN_JSONL
+    slug = slugify(nombre_categoria)
+    RUN_JSON = osp.join(OUT_DIR, f"{slug}_formatted.json")
+    RUN_JSONL = osp.join(OUT_DIR, f"{slug}_formatted.jsonl")
+
+    os.makedirs(OUT_DIR, exist_ok=True)
+    # Reinicia los archivos al iniciar un nuevo scrape de esta categoría
+    with open(RUN_JSON, "w", encoding="utf-8") as f:
+        f.write("[]")
+    with open(RUN_JSONL, "w", encoding="utf-8") as _:
+        pass
+
+    LOGGER.info(f"🗂️ Salidas para '{nombre_categoria}':")
+    LOGGER.info(f"   JSON  : {RUN_JSON}")
+    LOGGER.info(f"   JSONL : {RUN_JSONL}")
 
 
 # =========================
@@ -190,7 +229,7 @@ def obtener_nombre_categoria(driver) -> str:
     except Exception:
         pass
 
-    # 2) Breadcrumb (último item)
+    # 2) Breadcrumb
     try:
         crumb = driver.find_elements(By.CSS_SELECTOR, "nav [aria-label*='breadcrumb' i], nav[aria-label*='breadcrumb' i], nav.breadcrumb, ol.breadcrumb")
         if crumb:
@@ -247,6 +286,7 @@ def obtener_nombre_categoria(driver) -> str:
 
     return "N/A"
 
+
 # =========================
 # CONTADOR GLOBAL
 # =========================
@@ -278,14 +318,16 @@ class Producto:
 
 
 # =========================
-# PERSISTENCIA
+# PERSISTENCIA (usa RUN_JSON / RUN_JSONL)
 # =========================
-def guardar_json(productos: List[Producto], ruta=OUTPUT_JSON):
+def guardar_json(productos: List[Producto], ruta: Optional[str] = None):
+    ruta = ruta or RUN_JSON
     with open(ruta, "w", encoding="utf-8") as f:
         json.dump([asdict(p) for p in productos], f, ensure_ascii=False, indent=4)
 
 
-def append_jsonl(producto: Producto, ruta=OUTPUT_JSONL):
+def append_jsonl(producto: Producto, ruta: Optional[str] = None):
+    ruta = ruta or RUN_JSONL
     with open(ruta, "a", encoding="utf-8") as f:
         f.write(json.dumps(asdict(producto), ensure_ascii=False) + "\n")
 
@@ -317,7 +359,7 @@ def safe_get(driver, url: str, retries: int = 3, wait_between=(2.0, 4.0)) -> Non
 
 
 # =========================
-# DESCUBRIMIENTO DE CATEGORÍAS
+# DESCUBRIMIENTO DE CATEGORÍAS (no usado en CLI, se mantiene como helper)
 # =========================
 def descubrir_links_categorias(driver) -> Dict[str, str]:
     safe_get(driver, HOME_URL)
@@ -401,9 +443,6 @@ def resolver_categoria_por_nombre(nombre: str) -> Tuple[Optional[str], Optional[
 # EXTRACCIÓN DE UNA PÁGINA (INCREMENTAL + DEDUP)
 # =========================
 def _titulo_desde_pod(pod) -> str:
-    """
-    Intenta varios selectores de título comunes antes de usar el alt de la imagen.
-    """
     title_selectors = [
         "[data-testid='product-title']",
         "[data-testid='name']",
@@ -416,7 +455,6 @@ def _titulo_desde_pod(pod) -> str:
             if t:
                 return t
 
-    # fallback: alt de imagen
     img_elem = pod.find_elements(By.CSS_SELECTOR, "img[id^='testId-pod-image'], img[alt]")
     if img_elem:
         alt = (img_elem[0].get_attribute("alt") or "").strip()
@@ -456,18 +494,15 @@ def extraer_productos_pagina(
             if link in vistos_links:
                 continue
 
-            # título e imagen
             titulo = _titulo_desde_pod(pod)
             img_elem = pod.find_elements(By.CSS_SELECTOR, "img[id^='testId-pod-image']")
             imagen = img_elem[0].get_attribute("src") if img_elem and img_elem[0].get_attribute("src") else "N/A"
 
             if titulo == "N/A":
-                # último recurso: algún texto hijo
                 child_texts = [e.text.strip() for e in pod.find_elements(By.CSS_SELECTOR, "*") if e.text.strip()]
                 if child_texts:
                     titulo = child_texts[0]
 
-            # Filtros de promos
             if titulo != "N/A" and PROMO_TITLE_PAT.search(titulo):
                 continue
             if titulo != "N/A" and TITLE_EXCLUDE_PAT.search(titulo):
@@ -479,7 +514,6 @@ def extraer_productos_pagina(
             calificacion = extraer_calificacion_listado(pod)
             detalles_adicionales = ""
 
-            # En FAST_MODE: no abrir ficha salvo rating faltante
             if obtener_detalles or calificacion in {"N/A", "", "0"}:
                 original_window = driver.current_window_handle
                 driver.execute_script("window.open(arguments[0]);", link)
@@ -523,7 +557,7 @@ def extraer_productos_pagina(
             if producto.precio_valor is None and (PROMO_TITLE_PAT.search(producto.titulo or "") or TITLE_EXCLUDE_PAT.search(producto.titulo or "")):
                 continue
 
-            # Incremental inmediato
+            # Incremental inmediato hacia el archivo de la corrida (RUN_JSONL)
             append_jsonl(producto)
             vistos_links.add(link)
 
@@ -553,7 +587,6 @@ def ir_a_siguiente_pagina(driver) -> bool:
         if not posibles_botones:
             posibles_botones = driver.find_elements(By.CSS_SELECTOR, "li[class*='pagination-arrow'] a, a[class*='pagination-arrow']")
         if not posibles_botones:
-            # Intentos extra
             posibles_botones = driver.find_elements(By.CSS_SELECTOR, "a[rel='next'], button[aria-label*='Siguiente' i], a[aria-label*='Siguiente' i]")
 
         if not posibles_botones:
@@ -570,7 +603,6 @@ def ir_a_siguiente_pagina(driver) -> bool:
             nap(0.3, 0.7) if FAST_MODE else nap(0.6, 1.2)
             driver.execute_script("arguments[0].click();", siguiente_btn)
 
-        # Espera por cambio (staleness o URL distinta)
         try:
             if primer_pod:
                 WebDriverWait(driver, 15).until(EC.staleness_of(primer_pod))
@@ -614,9 +646,6 @@ def crear_driver() -> webdriver.Chrome:
     options.add_argument("--disable-webgl")
     options.add_argument("--disable-software-rasterizer")
 
-    # ❌ Ya NO bloqueamos imágenes (mejora títulos/alt y visibilidad de precios)
-    # options.add_experimental_option("prefs", {"profile.managed_default_content_settings.images": 2})
-
     options.add_experimental_option("excludeSwitches", ["enable-automation", "enable-logging"])
     options.add_experimental_option("useAutomationExtension", False)
 
@@ -652,12 +681,15 @@ def extraer_categoria(
     driver,
     url_categoria: str,
     nombre_categoria: Optional[str] = None,
-    limit_one_page: bool = False
+    limit_one_page: bool = False,
+    max_pages: Optional[int] = None  # límite de páginas
 ) -> List[Producto]:
     safe_get(driver, url_categoria)
     WebDriverWait(driver, 15).until(EC.presence_of_element_located((By.TAG_NAME, "body")))
     nap(1.0, 1.6) if FAST_MODE else nap(1.2, 2.0)
 
+    # El nombre que se guarda dentro del objeto es el detectado en la página
+    # (pero los archivos de salida ya usan la clave con set_run_outputs)
     categoria_nombre = obtener_nombre_categoria(driver) or nombre_categoria or "N/A"
     LOGGER.info(f"==> Categoria: {categoria_nombre} | {url_categoria}")
 
@@ -682,10 +714,17 @@ def extraer_categoria(
 
         productos_totales.extend(productos)
 
+        # 1) Si está activado el modo 1 página
         if limit_one_page:
             LOGGER.info(f"[{categoria_nombre}] Modo 1 página por categoría: detenido en página {pagina}.")
             break
 
+        # 2) Si el usuario indicó máximo de páginas
+        if max_pages is not None and pagina >= max_pages:
+            LOGGER.info(f"[{categoria_nombre}] Alcanzado límite de {max_pages} páginas. Detenido en página {pagina}.")
+            break
+
+        # 3) Intentar pasar a la siguiente página
         if not ir_a_siguiente_pagina(driver):
             LOGGER.info(f"[{categoria_nombre}] No hay más páginas.")
             break
@@ -697,39 +736,38 @@ def extraer_categoria(
 
 
 # =========================
-# EJECUCIÓN COMPLETA (AUTODISCOVERY)
+# EJECUCIÓN COMPLETA (por EXPECTED_URLS)
 # =========================
-def extraer_todas_categorias():
+def extraer_todas_categorias(max_pages: Optional[int] = None):
+    """
+    Scrapea TODAS las categorías definidas en EXPECTED_URLS.
+    Crea un archivo por categoría {clave}_formatted.json / .jsonl
+    """
     driver = crear_driver()
     try:
-        cats = descubrir_links_categorias(driver)
-        if not cats:
-            LOGGER.warning("No se encontraron categorías en la home. Revisa selectores o la disponibilidad del sitio.")
-            return []
-
-        items = list(cats.items())
+        items = list(EXPECTED_URLS.items())
         if isinstance(MAX_CATEGORIES, int) and MAX_CATEGORIES > 0:
             items = items[:MAX_CATEGORIES]
 
-        total: List[Producto] = []
         for nombre, url in items:
             try:
+                # Define archivos de salida para esta categoría por su clave
+                set_run_outputs(nombre)
                 productos_cat = extraer_categoria(
                     driver,
                     url,
                     nombre_categoria=nombre,
-                    limit_one_page=LIMIT_ONE_PAGE_PER_CATEGORY
+                    limit_one_page=LIMIT_ONE_PAGE_PER_CATEGORY,
+                    max_pages=max_pages
                 )
-                total.extend(productos_cat)
-                LOGGER.info(f"[{nombre}] Acumulado total: {len(total)} productos.")
+                # Guardado final (incremental ya se hizo)
+                guardar_json(productos_cat, RUN_JSON)
+                LOGGER.info(f"[{nombre}] Guardados {len(productos_cat)} productos en {RUN_JSON} y {RUN_JSONL}.")
             except Exception as e:
                 LOGGER.warning(f"Error extrayendo categoría '{nombre}': {e}")
                 continue
 
-        guardar_json(total, OUTPUT_JSON)
-        LOGGER.info(f"Guardados {len(total)} productos en {OUTPUT_JSON} y {OUTPUT_JSONL}.")
-        return total
-
+        LOGGER.info("✅ Proceso de scraping múltiple finalizado.")
     finally:
         driver.quit()
 
@@ -738,14 +776,14 @@ def extraer_todas_categorias():
 EXPECTED_URLS: Dict[str, str] = {
     "televisores": "https://www.falabella.com.co/falabella-co/category/cat1360967/TV-y-Video",
     "celulares": "https://www.falabella.com.co/falabella-co/category/cat1660941/Celulares-y-Telefonos",
+    "laptops": "https://www.falabella.com.co/falabella-co/category/cat111222/laptops",
     "domotica": "https://www.falabella.com.co/falabella-co/category/cat10431000/Smart-Home",
     "lavado": "https://www.falabella.com.co/falabella-co/category/cat50714/Lavado",
-    "refrigeracion":"https://www.falabella.com.co/falabella-co/category/CATG32130/Refrigeracion",
-    "Cocina":"https://www.falabella.com.co/falabella-co/category/cat2970970/Cocina",
-    "audifonos":"https://www.falabella.com.co/falabella-co/category/cat50670/Audifonos",
-    "videojuegos":"https://www.falabella.com.co/falabella-co/category/cat50590/Gaming",
-    "deportes":"https://www.falabella.com.co/falabella-co/category/cat50620/Fitness-y-Gimnasio-en-casa"
-
+    "refrigeracion": "https://www.falabella.com.co/falabella-co/category/CATG32130/Refrigeracion",
+    "cocina": "https://www.falabella.com.co/falabella-co/category/cat2970970/Cocina",
+    "audifonos": "https://www.falabella.com.co/falabella-co/category/cat50670/Audifonos",
+    "videojuegos": "https://www.falabella.com.co/falabella-co/category/cat50590/Gaming",
+    "deportes": "https://www.falabella.com.co/falabella-co/category/cat50620/Fitness-y-Gimnasio-en-casa",
 }
 
 
@@ -760,7 +798,7 @@ if __name__ == "__main__":
         "--max-categories",
         type=int,
         default=None,
-        help="Limitar cantidad de categorías (None = todas). Ej: --max-categories 5"
+        help="Limitar cantidad de categorías cuando se scrapean todas (None = todas). Ej: --max-categories 5"
     )
     grp = parser.add_mutually_exclusive_group()
     grp.add_argument(
@@ -775,16 +813,20 @@ if __name__ == "__main__":
         action="store_false",
         help="Permitir múltiples páginas por categoría"
     )
-    # Si el usuario no pasa nada, usamos el valor por defecto (ahora False)
     parser.set_defaults(one_page=None)
 
     parser.add_argument(
         "--category",
         type=str,
         default=None,
-        help="Nombre de la categoría a scrapear (según EXPECTED_URLS). Si se omite, se scrapea todo Falabella."
+        help="Nombre de la categoría a scrapear (según EXPECTED_URLS). Si se omite, se scrapean todas."
     )
-
+    parser.add_argument(
+        "--pages",
+        type=int,
+        default=None,
+        help="Cantidad máxima de páginas a scrapear por categoría. Ej: --pages 3"
+    )
     parser.add_argument(
         "--fast",
         action="store_true",
@@ -802,6 +844,7 @@ if __name__ == "__main__":
         FAST_MODE = True
         LOGGER.info("⚡ Modo rápido activado (--fast)")
 
+    # Si el usuario especifica una categoría
     if args.category:
         nombre_match, url = resolver_categoria_por_nombre(args.category)
         if not url:
@@ -811,17 +854,23 @@ if __name__ == "__main__":
                 f"   Disponibles: {disponibles}"
             )
 
+        # Define archivos por la clave elegida (asegura p.ej. 'celulares_formatted.json')
+        set_run_outputs(nombre_match)
+
         driver = crear_driver()
         try:
             productos = extraer_categoria(
                 driver,
                 url,
-                nombre_categoria=nombre_match,
-                limit_one_page=LIMIT_ONE_PAGE_PER_CATEGORY
+                nombre_categoria=nombre_match,  # nombre guardado en el objeto
+                limit_one_page=LIMIT_ONE_PAGE_PER_CATEGORY,
+                max_pages=args.pages
             )
-            guardar_json(productos, OUTPUT_JSON)
-            LOGGER.info(f"Guardados {len(productos)} productos en {OUTPUT_JSON} y {OUTPUT_JSONL}.")
+            # Guardado final (incremental ya se hizo a RUN_JSONL)
+            guardar_json(productos, RUN_JSON)
+            LOGGER.info(f"Guardados {len(productos)} productos en {RUN_JSON} y {RUN_JSONL}.")
         finally:
             driver.quit()
     else:
-        extraer_todas_categorias()
+        # Sin categoría específica -> scrapea todas las de EXPECTED_URLS
+        extraer_todas_categorias(max_pages=args.pages)
