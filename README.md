@@ -35,9 +35,6 @@ python scrape_falabella_all.py --category "televisores"
 📱 Celulares
 python scrape_falabella_all.py --category "celulares"
 
-💻 Laptops
-python scrape_falabella_all.py --category "laptops"
-
 🏠 Domótica
 python scrape_falabella_all.py --category "domotica"
 
