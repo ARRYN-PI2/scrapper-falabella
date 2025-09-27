@@ -24,30 +24,40 @@ Para ejecutar el scraper con la configuración por defecto:
 python scrape_falabella_all.py
 
 
-Esto recorrerá todas las categorías detectadas en Falabella, y por defecto solo 1 página por categoría.
+🎯 Ejecución por categorías específicas
 
-⚙️ Opciones de línea de comandos
+El scrapper soporta ejecución filtrada por categorías usando el flag --category.
+Estas son las categorías disponibles:
 
-El scraper soporta opciones para limitar categorías y páginas:
+📺 Televisores
+python scrape_falabella_all.py --category "televisores"
 
-Limitar número de categorías (ejemplo: solo 5):
+📱 Celulares
+python scrape_falabella_all.py --category "celulares"
 
-python scrape_falabella_all.py --max-categories 5
+💻 Laptops
+python scrape_falabella_all.py --category "laptops"
 
+🏠 Domótica
+python scrape_falabella_all.py --category "domotica"
 
-Forzar 1 sola página por categoría (modo rápido):
+🧺 Lavado
+python scrape_falabella_all.py --category "lavado"
 
-python scrape_falabella_all.py --one-page
+❄️ Refrigeración
+python scrape_falabella_all.py --category "refrigeracion"
 
+🍳 Cocina
+python scrape_falabella_all.py --category "cocina"
 
-Permitir múltiples páginas por categoría:
+🎧 Audífonos
+python scrape_falabella_all.py --category "audifonos"
 
-python scrape_falabella_all.py --multi-page
+🎮 Videojuegos
+python scrape_falabella_all.py --category "videojuegos"
 
-
-Ejemplo combinado:
-
-python scrape_falabella_all.py --max-categories 3 --multi-page
+🏋️ Deportes 
+python scrape_falabella_all.py --category "deportes"
 
 📂 Archivos generados
 
