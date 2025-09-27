@@ -776,7 +776,6 @@ def extraer_todas_categorias(max_pages: Optional[int] = None):
 EXPECTED_URLS: Dict[str, str] = {
     "televisores": "https://www.falabella.com.co/falabella-co/category/cat1360967/TV-y-Video",
     "celulares": "https://www.falabella.com.co/falabella-co/category/cat1660941/Celulares-y-Telefonos",
-    "laptops": "https://www.falabella.com.co/falabella-co/category/cat111222/laptops",
     "domotica": "https://www.falabella.com.co/falabella-co/category/cat10431000/Smart-Home",
     "lavado": "https://www.falabella.com.co/falabella-co/category/cat50714/Lavado",
     "refrigeracion": "https://www.falabella.com.co/falabella-co/category/CATG32130/Refrigeracion",
@@ -784,6 +783,7 @@ EXPECTED_URLS: Dict[str, str] = {
     "audifonos": "https://www.falabella.com.co/falabella-co/category/cat50670/Audifonos",
     "videojuegos": "https://www.falabella.com.co/falabella-co/category/cat50590/Gaming",
     "deportes": "https://www.falabella.com.co/falabella-co/category/cat50620/Fitness-y-Gimnasio-en-casa",
+    "computadores": "https://www.falabella.com.co/falabella-co/category/cat171006/Computadores"
 }
 
 
