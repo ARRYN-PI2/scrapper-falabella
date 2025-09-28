@@ -19,7 +19,7 @@ pip install -r requirements.txt
 
 ▶️ Ejecución básica
 
-Para ejecutar el scraper con la configuración por defecto:
+Para ejecutar el scraper con la configuración por defecto (Scrapppear todo falabella con todas las paginas y categorias): 
 
 python scrape_falabella_all.py
 
@@ -34,9 +34,6 @@ python scrape_falabella_all.py --category "televisores"
 
 📱 Celulares
 python scrape_falabella_all.py --category "celulares"
-
-💻 Laptops
-python scrape_falabella_all.py --category "laptops"
 
 🏠 Domótica
 python scrape_falabella_all.py --category "domotica"
@@ -58,6 +55,12 @@ python scrape_falabella_all.py --category "videojuegos"
 
 🏋️ Deportes 
 python scrape_falabella_all.py --category "deportes"
+
+Para indicarle cuantas paginas se deben de scrappear
+
+python scrape_falabella_all.py --category televisores --pages 2
+
+Si no se indica una cantidad de paginas, se scrappean todas las paginas que hayan
 
 📂 Archivos generados
 
