@@ -53,6 +53,9 @@ python scrape_falabella_all.py --category "audifonos"
 🎮 Videojuegos
 python scrape_falabella_all.py --category "videojuegos"
 
+Computadores
+python scrape_falabella_all.py --category "computadores"
+
 🏋️ Deportes 
 python scrape_falabella_all.py --category "deportes"
 

@@ -36,7 +36,7 @@ logging.basicConfig(
     format="%(asctime)s [%(levelname)s] %(message)s"
 )
 
-OUT_DIR = osp.join(os.getcwd(), "out")
+OUT_DIR = osp.join(os.getcwd(), "data")
 os.makedirs(OUT_DIR, exist_ok=True)
 
 LOGGER = logging.getLogger("falabella_all_scraper")
