@@ -148,25 +148,23 @@ WebDriver Setup → Category Discovery → Page Navigation → Product Extractio
 
 ## 🏗️ Estructura del Código y Componentes
 
-### **1. Scraper de Televisores (`Scrapper_F.py`)**
+### **1. Scraper Principal (`scrape_falabella_all.py`)**
 **Responsabilidades:**
-- **Búsqueda Especializada**: Extrae únicamente productos de televisores con optimizaciones específicas
+- **Extracción Multi-Categoría**: Puede extraer productos de múltiples categorías incluyendo televisores
+- **Descubrimiento Automático**: Detecta dinámicamente categorías disponibles en el sitio mediante análisis del DOM
 - **Detección Inteligente de Especificaciones**: Reconocimiento automático de pulgadas y características técnicas
 - **Extracción de Datos Enriquecida**: 
   - Título del producto con normalización
   - Marca (detectada automáticamente mediante algoritmos heurísticos)
   - Precio (texto original + valor numérico extraído)
-  - Tamaño en pulgadas con validación
+  - Tamaño en pulgadas con validación (especialmente para televisores)
   - Calificación de usuarios y número de reseñas
   - Detalles adicionales del producto
   - Imagen del producto (URL validada)
   - Link directo al producto
   - Metadatos de extracción (fecha, estado, página)
 
-### **2. Scraper Multi-Categoría (`scrape_falabella_all.py`)**
-
 **Características Avanzadas:**
-- **Descubrimiento Automático**: Detecta dinámicamente categorías disponibles en el sitio mediante análisis del DOM
 - **Extracción Masiva Escalable**: Procesa múltiples categorías de productos con arquitectura optimizada
 - **Filtros Inteligentes Avanzados**: 
   - Eliminación de productos promocionales usando patrones de detección
@@ -310,10 +308,7 @@ pip install -r requirements.txt
 google-chrome --version  # Linux
 # O verificar que Chrome esté instalado en el sistema
 
-# 5. Ejecutar scraper de televisores (modo especializado)
-python Scrapper_F.py
-
-# 6. Ejecutar scraper multi-categoría (modo completo)
+# 5. Ejecutar scraper (modo completo - múltiples categorías)
 python scrape_falabella_all.py
 ```
 
@@ -321,10 +316,10 @@ python scrape_falabella_all.py
 
 #### **1. Análisis de Mercado - Televisores**
 ```bash
-# Extracción enfocada en televisores con datos enriquecidos
-python Scrapper_F.py
+# Extracción enfocada en televisores configurando categorías específicas
+python scrape_falabella_all.py
 
-# Resultado: productos.json + productos.jsonl con especificaciones TV
+# Resultado: televisores_formatted.json + televisores_formatted.jsonl con especificaciones TV
 ```
 
 #### **2. Monitoreo de Precios - Múltiples Categorías**
@@ -352,7 +347,6 @@ python scrape_falabella_all.py
 ```bash
 # Modo de prueba limitado
 # Modificar variables en el código:
-# limitar_una_pagina = True (en Scrapper_F.py)
 # LIMIT_ONE_PAGE_PER_CATEGORY = True (en scrape_falabella_all.py)
 ```
 
@@ -362,10 +356,10 @@ python scrape_falabella_all.py
 
 | Archivo | Propósito | Formato | Uso Recomendado |
 |---------|-----------|---------|-----------------|
-| `productos.json` | Dataset televisores completo | JSON estructurado | Análisis manual, visualización |
-| `productos.jsonl` | Stream televisores | JSON Lines | Big data, procesamiento incremental |
-| `productos_all.json` | Dataset multi-categoría | JSON estructurado | Análisis integral de mercado |
+| `productos_all.json` | Dataset multi-categoría completo | JSON estructurado | Análisis integral de mercado |
 | `productos_all.jsonl` | Stream multi-categoría | JSON Lines | Machine Learning, ETL pipelines |
+| `[categoria]_formatted.json` | Dataset específico por categoría | JSON estructurado | Análisis manual, visualización |
+| `[categoria]_formatted.jsonl` | Stream por categoría | JSON Lines | Big data, procesamiento incremental |
 
 ### **Características de los Formatos:**
 
@@ -427,16 +421,16 @@ python scrape_falabella_all.py
 
 ### **Configuraciones Internas del Código:**
 
-#### **Scraper de Televisores (`Scrapper_F.py`)**
+#### **Configuraciones del Scraper (`scrape_falabella_all.py`)**
 ```python
-# Variables de configuración modificables
-limitar_una_pagina = False          # Modo de prueba rápida
-DELAY_MIN, DELAY_MAX = 1.0, 2.0     # Rango de delays aleatorios (segundos)
-MAX_SCROLL_ATTEMPTS = 10            # Intentos máximos de scroll inteligente
-TIMEOUT_SECONDS = 30                # Timeout para carga de elementos
+# Variables de configuración principales
+LIMIT_ONE_PAGE_PER_CATEGORY = False # Modo de prueba rápida
+MAX_CATEGORIES = None               # None = procesar todas las categorías encontradas
+REQUEST_DELAY = (1.0, 2.0)         # Delay aleatorio entre requests (anti-bot)
+CHROME_HEADLESS = True              # Modo sin interfaz gráfica para rendimiento
 ```
 
-#### **Scraper Multi-Categoría (`scrape_falabella_all.py`)**
+#### **Configuraciones Avanzadas del Sistema:**
 ```python
 # Configuraciones principales
 MAX_CATEGORIES = None               # None = procesar todas las categorías encontradas
@@ -730,17 +724,14 @@ scrapper-falabella/
 │   └── .dockerignore                # Exclusiones para build eficiente
 │
 ├── 🐍 Código Principal
-│   ├── Scrapper_F.py                # Scraper especializado en televisores
-│   │   ├── setup_webdriver()        # Configuración Chrome optimizada
-│   │   ├── extract_tv_products()    # Lógica específica para televisores
-│   │   ├── detect_brand_heuristic() # Algoritmo detección de marcas
-│   │   └── smart_scroll_handler()   # Manejo inteligente de scroll
-│   │
-│   └── scrape_falabella_all.py      # Scraper multi-categoría
+│   └── scrape_falabella_all.py      # Scraper multi-categoría principal
+│       ├── setup_webdriver()        # Configuración Chrome optimizada
 │       ├── discover_categories()    # Descubrimiento automático de categorías
 │       ├── process_category_page()  # Procesamiento por página de categoría
 │       ├── extract_product_grid()   # Extracción de grilla de productos
+│       ├── detect_brand_heuristic() # Algoritmo detección de marcas
 │       ├── clean_and_normalize()    # Limpieza y normalización de datos
+│       ├── smart_scroll_handler()   # Manejo inteligente de scroll
 │       └── pagination_handler()     # Navegación automática de páginas
 │
 ├── 📄 Configuración
@@ -793,19 +784,20 @@ scrapper-falabella/
 
 ### **Descripción Funcional por Componente:**
 
-#### **📁 /Scrapper_F.py - Scraper Especializado**
+#### **📁 /scrape_falabella_all.py - Scraper Principal**
 ```python
 # Características principales del archivo:
-class TVScraper:
+class FalabellaScraper:
     """
-    Scraper optimizado específicamente para televisores de Falabella
+    Scraper multi-categoría para Falabella con capacidades especializadas
     - Detección automática de marcas (Samsung, LG, Sony, etc.)
-    - Extracción de tamaños en pulgadas con regex avanzado
+    - Extracción de tamaños en pulgadas con regex avanzado para televisores  
     - Clasificación de tecnologías (LED, OLED, QLED, Crystal UHD)
     - Identificación de características Smart TV
+    - Procesamiento de múltiples categorías de productos
     """
-    def extract_tv_specific_data(self, product_element):
-        # Lógica especializada para televisores
+    def extract_product_data(self, product_element):
+        # Lógica general para extracción de productos multi-categoría
         pass
 ```
 
@@ -1172,8 +1164,8 @@ class NuevoSiteScraper(BaseScraper):
 
 ### **1. Investigación de Mercado**
 ```bash
-# Análisis completo del mercado de televisores
-python Scrapper_F.py
+# Análisis completo del mercado configurando categorías específicas
+python scrape_falabella_all.py
 
 # Resultado: Dataset especializado con:
 # - Marcas dominantes en el mercado
@@ -1186,7 +1178,7 @@ python Scrapper_F.py
 ```bash
 # Extracción regular para análisis de tendencias
 docker run --rm \
-  -v "$(pwd)/pricing_data:/app/out" \
+  -v "$(pwd)/pricing_data:/app/data" \
   -e MAX_CATEGORIES=5 \
   moonsalve/scrapper:latest
 

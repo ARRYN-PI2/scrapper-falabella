@@ -67,6 +67,6 @@ Si no se indica una cantidad de paginas, se scrappean todas las paginas que haya
 
 📂 Archivos generados
 
-out/productos_all.json → lista acumulada de todos los productos.
+data/productos_all.json → lista acumulada de todos los productos.
 
-out/productos_all.jsonl → guardado incremental, un producto por línea.
+data/productos_all.jsonl → guardado incremental, un producto por línea.
